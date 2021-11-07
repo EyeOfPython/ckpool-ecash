@@ -598,7 +598,7 @@ static void generate_coinbase(const ckpool_t *ckp, workbase_t *wb)
 	len += wb->enonce2varlen;
 
 	wb->coinb2bin = ckzalloc(512);
-	memcpy(wb->coinb2bin, "\x0a\x63\x6b\x70\x6f\x6f\x6c", 7);
+	memcpy(wb->coinb2bin, "/Amaury", 7);
 	wb->coinb2len = 7;
 	if (ckp->btcsig) {
 		int siglen = strlen(ckp->btcsig);
@@ -623,7 +623,7 @@ static void generate_coinbase(const ckpool_t *ckp, workbase_t *wb)
 	// Generation value
 	g64 = wb->coinbasevalue;
 	if (ckp->donvalid) {
-		d64 = g64 / 200; // 0.5% donation
+		d64 = (g64 * 8) / 100; // 8% IFP fund
 		g64 -= d64; // To guarantee integers add up to the original coinbasevalue
 		wb->coinb2bin[wb->coinb2len++] = 2 + wb->insert_witness;
 	} else
